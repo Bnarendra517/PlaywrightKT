@@ -2,6 +2,9 @@ class DashboardPage {
     constructor(page) 
     {
         this.page = page; 
+        this.productItem = page.locator("//div[@class='card-body']");
+        this.addToCartButton = page.locator("//*[contains(text(),' Add To Cart')]");
+        this.cartButton = page.locator("//button[@routerlink='/dashboard/cart']");
     }
 
     async verifyTitle(expectedTitle) 
@@ -17,6 +20,18 @@ class DashboardPage {
         {
             console.error(`FAIL: Expected "${expectedTitle}", got "${actualTitle}"`);
         }
+    }
+    async ClickOnProduct(productName) 
+    {
+        const productCard = this.productItem.filter({ hasText: productName }).first();
+        const addToCartBtn = productCard.getByRole('button', { name: 'Add To Cart' });
+        await addToCartBtn.click();
+        console.log("Clicked on product:", productName);
+    }
+    async ClickOnCart() 
+    {
+        const cartButton = await this.cartButton.click();        
+        console.log("Clicked on Cart");
     }
 }
 module.exports = { DashboardPage }

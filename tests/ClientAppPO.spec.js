@@ -1,6 +1,8 @@
 import {test,expect} from '@playwright/test';
 const {LoginPage}=require('../PageObjects/LoginPage');
 const {DashboardPage}=require('../PageObjects/DashBoardPage');
+const {MyCartPage} = require('../PageObjects/MyCartPage');
+const {PaymentPage} = require('../PageObjects/PaymentPage');
 const loginDataSet = JSON.parse(JSON.stringify(require('../TestData/LoginTestData.json')));
 const dashboardDataSet = JSON.parse(JSON.stringify(require('../TestData/DashboardTestData.json')));
 
@@ -17,6 +19,23 @@ test('ClientAppPO', async ({ page }) => {
     //Dashboard Page
     const dashboardPageObj=new DashboardPage(page);
     await dashboardPageObj.verifyTitle(dashboardDataSet.title);
-    //await dashboardPageObj.navigateToProfile();
+    
+    // Click on the Myntra Product
+    await dashboardPageObj.ClickOnProduct(dashboardDataSet.productName); 
+    await dashboardPageObj.ClickOnCart();
+
+    //My Cart Page
+    const myCartPageObj = new MyCartPage(page);
+    await myCartPageObj.verifytheProductName(dashboardDataSet.productname);
+    await myCartPageObj.checkout();
+
+    //Payment Page
+    const paymentPageObj=new PaymentPage(page);
+    await paymentPageObj.creditCardNumber(dashboardDataSet.creditCardNumber);
+    await paymentPageObj.cvv(dashboardDataSet.cvv);
+    await paymentPageObj.nameOnCard(dashboardDataSet.NameOnCard);
+    //await paymentPageObj.country(dashboardDataSet.country);
+        
+    
     
 });
