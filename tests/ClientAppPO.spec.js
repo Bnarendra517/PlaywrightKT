@@ -3,6 +3,7 @@ const {LoginPage}=require('../PageObjects/LoginPage');
 const {DashboardPage}=require('../PageObjects/DashBoardPage');
 const {MyCartPage} = require('../PageObjects/MyCartPage');
 const {PaymentPage} = require('../PageObjects/PaymentPage');
+const {OrderConfirmationPage} = require('../PageObjects/OrderConfirmationPage');
 const loginDataSet = JSON.parse(JSON.stringify(require('../TestData/LoginTestData.json')));
 const dashboardDataSet = JSON.parse(JSON.stringify(require('../TestData/DashboardTestData.json')));
 
@@ -34,8 +35,14 @@ test('ClientAppPO', async ({ page }) => {
     await paymentPageObj.creditCardNumber(dashboardDataSet.creditCardNumber);
     await paymentPageObj.cvv(dashboardDataSet.cvv);
     await paymentPageObj.nameOnCard(dashboardDataSet.NameOnCard);
-    //await paymentPageObj.country(dashboardDataSet.country);
-        
+    await paymentPageObj.country(dashboardDataSet.country);
+    await paymentPageObj.placeOrder();
+
+    // Verify the order confirmation
+    const orderConfirmationPageObj = new OrderConfirmationPage(page);
+    orderConfirmationPageObj.verifyOrderConfirmation();
+
+            
     
     
 });

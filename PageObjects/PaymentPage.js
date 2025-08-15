@@ -9,7 +9,8 @@ class PaymentPage
         this.cvvInput = page.locator("//*[text()='CVV Code ']/following-sibling::input");
         this.nameOnCardInput = page.locator("//*[text()='Name on Card ']/following-sibling::input");
         this.applyCouponInput = page.locator("//*[text()='Coupon Code ']/following-sibling::input");
-        this.countryInput = page.locator("//div[@class='form-group']");
+        this.countryInput = page.locator("//input[@placeholder='Select Country']");
+        this.placeOrderButton = page.locator("//a[contains(text(),'Place Order ')]");
     }
 
     async creditCardNumber(creditCardNumber) 
@@ -29,19 +30,32 @@ class PaymentPage
     } 
     async country(country) 
     {   
-        await this.countryInput.fill(country);
+        await this.countryInput.pressSequentially(country,{ delay: 100 });
         console.log("Filled Country:", country);
-        await this.page.waitforselector("//section[@class='ta-results list-group ng-star-inserted']/button");
+        await this.page.waitForTimeout(2000); // Wait for the dropdown to populate
+        await this.page.waitForSelector("//section[@class='ta-results list-group ng-star-inserted']/button", { state: 'visible' });
         const fromcountry=await this.page.$$("//section[@class='ta-results list-group ng-star-inserted']/button");
+
         for (let i = 0; i < fromcountry.length; i++) 
         {
             const countryText = await fromcountry[i].textContent();
             console.log("Country in dropdown:", countryText);
+            if (countryText===country) 
+            {
+                await fromcountry[i].click();
+                console.log("Selected country:", countryText);
+                break;
+            }
+            await this.page.keyboard.press('Escape')
+
         }
-        
-
     }
-
-
+    async placeOrder() 
+    {
+        await this.page.waitForTimeout(5000); // Wait for the selection to be processed
+        await this.placeOrderButton.click();
+        console.log("Clicked on Place Order");
+        await this.page.waitForTimeout(5000); // Wait for the order to be placed
+    }
 }
 module.exports = { PaymentPage };
