@@ -41,16 +41,12 @@ test('ClientAppPO', async ({ page }) => {
 
     // Verify the order confirmation
     const orderConfirmationPageObj = new OrderConfirmationPage(page);
-    orderConfirmationPageObj.verifyOrderConfirmation();
+    await orderConfirmationPageObj.verifyOrderConfirmation();
 
     //Verify in Order History Page
     const orderHistoryPageObj = new OrderHistoryPage(page);
-    orderHistoryPageObj.verifyOrderInHistory();
-
-    //Sign out from the application
-    await dashboardPageObj.signOut();
-
-            
+    await orderHistoryPageObj.verifyOrderInHistory();
+    await orderHistoryPageObj.signOut();
     
     
 });

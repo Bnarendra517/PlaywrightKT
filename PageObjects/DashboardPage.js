@@ -5,7 +5,6 @@ class DashboardPage {
         this.productItem = page.locator("//div[@class='card-body']");
         this.addToCartButton = page.locator("//*[contains(text(),' Add To Cart')]");
         this.cartButton = page.locator("//button[@routerlink='/dashboard/cart']");
-        this.signOutButton = page.locator("//button[contains(text(),'Sign Out')]");
     }
 
     async verifyTitle(expectedTitle) 
@@ -35,11 +34,6 @@ class DashboardPage {
         console.log("Clicked on Cart");
     }
 
-    async signOut() 
-    {
-        await this.page.signOutButton.click();
-        console.log("Clicked on Sign Out");
-        await this.page.waitForLoadState('networkidle');
-    }
+  
 }
 module.exports = { DashboardPage }

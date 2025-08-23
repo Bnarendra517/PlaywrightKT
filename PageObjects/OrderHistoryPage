@@ -1,6 +1,8 @@
 class OrderHistoryPage {
     constructor(page) {
         this.page = page;
+        this.signOutButton = page.locator("//button[contains(text(),'Sign Out')]");
+
         //this.orderHistoryTable = page.locator("//tr[@class='ng-star-inserted']/th");
     }
 
@@ -21,6 +23,11 @@ class OrderHistoryPage {
             
         }
     }
-
+    async signOut() 
+    {
+        const varSignOut=await this.signOutButton.click();
+        console.log("Clicked on Sign Out");
+        //await this.page.waitForLoadState('networkidle');
+    }
 }
 module.exports = { OrderHistoryPage };
