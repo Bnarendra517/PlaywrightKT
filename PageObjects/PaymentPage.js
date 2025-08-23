@@ -34,19 +34,19 @@ class PaymentPage
         console.log("Filled Country:", country);
         await this.page.waitForTimeout(2000); // Wait for the dropdown to populate
         await this.page.waitForSelector("//section[@class='ta-results list-group ng-star-inserted']/button", { state: 'visible' });
-        const fromcountry=await this.page.$$("//section[@class='ta-results list-group ng-star-inserted']/button");
+        const fromcountry=await this.page.$$("//section[contains(@class,'ta-results')]//button");
 
         for (let i = 0; i < fromcountry.length; i++) 
         {
             const countryText = await fromcountry[i].textContent();
             console.log("Country in dropdown:", countryText);
-            if (countryText===country) 
+            if (countryText.trim()===country) 
             {
                 await fromcountry[i].click();
                 console.log("Selected country:", countryText);
+                await this.page.keyboard.press('Escape')
                 break;
             }
-            await this.page.keyboard.press('Escape')
 
         }
     }

@@ -1,0 +1,26 @@
+class OrderHistoryPage {
+    constructor(page) {
+        this.page = page;
+        //this.orderHistoryTable = page.locator("//tr[@class='ng-star-inserted']/th");
+    }
+
+    async verifyOrderInHistory() {
+        await this.page.waitForLoadState('networkidle');
+        const header = await this.page.$$("//tr[@class='ng-star-inserted']/th");
+
+        //console.log("Number of orders in history:", header);
+
+        for (const element of header) {
+            const text = await element.textContent();
+            if(text.trim()===actualorderid)
+            {
+                console.log("Order is available in order history:", text.trim());   
+                break;
+            }
+            //console.log("Order in history:", text.trim());
+            
+        }
+    }
+
+}
+module.exports = { OrderHistoryPage };

@@ -4,6 +4,7 @@ const {DashboardPage}=require('../PageObjects/DashBoardPage');
 const {MyCartPage} = require('../PageObjects/MyCartPage');
 const {PaymentPage} = require('../PageObjects/PaymentPage');
 const {OrderConfirmationPage} = require('../PageObjects/OrderConfirmationPage');
+const {OrderHistoryPage} = require('../PageObjects/OrderHistoryPage');
 const loginDataSet = JSON.parse(JSON.stringify(require('../TestData/LoginTestData.json')));
 const dashboardDataSet = JSON.parse(JSON.stringify(require('../TestData/DashboardTestData.json')));
 
@@ -41,6 +42,13 @@ test('ClientAppPO', async ({ page }) => {
     // Verify the order confirmation
     const orderConfirmationPageObj = new OrderConfirmationPage(page);
     orderConfirmationPageObj.verifyOrderConfirmation();
+
+    //Verify in Order History Page
+    const orderHistoryPageObj = new OrderHistoryPage(page);
+    orderHistoryPageObj.verifyOrderInHistory();
+
+    //Sign out from the application
+    await dashboardPageObj.signOut();
 
             
     
