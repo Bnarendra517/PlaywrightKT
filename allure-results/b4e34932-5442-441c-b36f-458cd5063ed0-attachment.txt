@@ -1,0 +1,19 @@
+Actual page title: Let's Shop
+Expected page title: Let's Shop
+PASS: Title matched
+Clicked on product: undefined
+Clicked on Cart
+Actual product name in cart: Laptop
+Expected product name in cart: Laptop
+PASS: Product name matched in cart
+Filled Credit Card Number: 1234567890123456
+Filled CVV: 123
+Filled Name on Card: John Doe
+Filled Country: India
+Country in dropdown:  British Indian Ocean Territory
+Country in dropdown:  India
+Selected country:  India
+Clicked on Place Order
+Order placed successfully and confirmation message displayed.
+Order ID:  | 68b568caf669d6cb0aab4ee2 | 
+Clicked on Sign Out
